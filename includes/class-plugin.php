@@ -6,6 +6,7 @@ require_once IMITATOR_PATH . 'includes/class-admin.php';
 require_once IMITATOR_PATH . 'includes/class-database.php';
 require_once IMITATOR_PATH . 'includes/class-backup-manager.php';
 require_once IMITATOR_PATH . 'includes/class-database-backup.php';
+require_once IMITATOR_PATH . 'includes/class-file-backup.php';
 
 class Imitator_Plugin {
 

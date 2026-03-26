@@ -21,7 +21,7 @@ defined('ABSPATH') || exit;
         <?php wp_nonce_field('imitator_create_backup_action', 'imitator_nonce'); ?>
 
         <button class="button button-primary" type="submit">
-            <?php esc_html_e('Create Database Backup', 'imitator'); ?>
+            <?php esc_html_e('Create Full Backup', 'imitator'); ?>
         </button>
     </form>
 
@@ -32,6 +32,7 @@ defined('ABSPATH') || exit;
             <tr>
                 <th><?php esc_html_e('ID', 'imitator'); ?></th>
                 <th><?php esc_html_e('Backup Name', 'imitator'); ?></th>
+                <th><?php esc_html_e('Archive File', 'imitator'); ?></th>
                 <th><?php esc_html_e('Database File', 'imitator'); ?></th>
                 <th><?php esc_html_e('Type', 'imitator'); ?></th>
                 <th><?php esc_html_e('Created At', 'imitator'); ?></th>
@@ -43,6 +44,7 @@ defined('ABSPATH') || exit;
                     <tr>
                         <td><?php echo esc_html($backup->id); ?></td>
                         <td><?php echo esc_html($backup->backup_name); ?></td>
+                        <td><?php echo esc_html($backup->archive_name); ?></td>
                         <td><?php echo esc_html($backup->database_name); ?></td>
                         <td><?php echo esc_html($backup->backup_type); ?></td>
                         <td><?php echo esc_html($backup->created_at); ?></td>
@@ -50,7 +52,7 @@ defined('ABSPATH') || exit;
                 <?php endforeach; ?>
             <?php else : ?>
                 <tr>
-                    <td colspan="5"><?php esc_html_e('No backups found yet.', 'imitator'); ?></td>
+                    <td colspan="6"><?php esc_html_e('No backups found yet.', 'imitator'); ?></td>
                 </tr>
             <?php endif; ?>
         </tbody>
