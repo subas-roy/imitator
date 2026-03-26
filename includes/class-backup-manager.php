@@ -39,25 +39,31 @@ class Imitator_Backup_Manager {
             $this->redirect_with_notice('error', $db_result->get_error_message());
         }
 
-        // 2. wp-content ZIP backup.
+        // 2. Try wp-content ZIP backup (optional).
+        $archive_name = '';
+        $notice       = __('Database backup created successfully.', 'imitator');
+
         $file_backup = new Imitator_File_Backup();
         $zip_result  = $file_backup->create($zip_file_path);
 
-        if (is_wp_error($zip_result)) {
-            $this->redirect_with_notice('error', $zip_result->get_error_message());
+        if (! is_wp_error($zip_result)) {
+            $archive_name = $zip_file_name;
+            $notice       = __('Full backup created successfully.', 'imitator');
+        } else {
+            $notice = __('Database backup created, but ZIP archive could not be generated on this server.', 'imitator');
         }
 
         // 3. Save DB record.
         $this->insert_backup_record(
             array(
                 'backup_name'   => $base_name,
-                'archive_name'  => $zip_file_name,
+                'archive_name'  => $archive_name,
                 'database_name' => $sql_file_name,
                 'backup_type'   => 'manual',
             )
         );
 
-        $this->redirect_with_notice('success', __('Full backup created successfully.', 'imitator'));
+        $this->redirect_with_notice('success', $notice);
     }
 
     /**

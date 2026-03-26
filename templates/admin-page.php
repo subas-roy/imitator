@@ -32,8 +32,8 @@ defined('ABSPATH') || exit;
             <tr>
                 <th><?php esc_html_e('ID', 'imitator'); ?></th>
                 <th><?php esc_html_e('Backup Name', 'imitator'); ?></th>
-                <th><?php esc_html_e('Archive File', 'imitator'); ?></th>
-                <th><?php esc_html_e('Database File', 'imitator'); ?></th>
+                <th><?php esc_html_e('Archive', 'imitator'); ?></th>
+                <th><?php esc_html_e('Database', 'imitator'); ?></th>
                 <th><?php esc_html_e('Type', 'imitator'); ?></th>
                 <th><?php esc_html_e('Created At', 'imitator'); ?></th>
             </tr>
@@ -44,8 +44,25 @@ defined('ABSPATH') || exit;
                     <tr>
                         <td><?php echo esc_html($backup->id); ?></td>
                         <td><?php echo esc_html($backup->backup_name); ?></td>
-                        <td><?php echo esc_html($backup->archive_name); ?></td>
-                        <td><?php echo esc_html($backup->database_name); ?></td>
+
+                        <td>
+                            <?php if (! empty($backup->archive_name)) : ?>
+                                <a class="button button-secondary" href="<?php echo esc_url(wp_nonce_url(admin_url('admin-post.php?action=imitator_download_backup&backup_id=' . $backup->id . '&type=archive'), 'imitator_download_backup_action', 'imitator_nonce')); ?>">
+                                    <?php esc_html_e('Download ZIP', 'imitator'); ?>
+                                </a>
+                            <?php else : ?>
+                                <span style="color:#777;"><?php esc_html_e('Not available', 'imitator'); ?></span>
+                            <?php endif; ?>
+                        </td>
+
+                        <td>
+                            <?php if (! empty($backup->database_name)) : ?>
+                                <a class="button button-secondary" href="<?php echo esc_url(wp_nonce_url(admin_url('admin-post.php?action=imitator_download_backup&backup_id=' . $backup->id . '&type=database'), 'imitator_download_backup_action', 'imitator_nonce')); ?>">
+                                    <?php esc_html_e('Download SQL', 'imitator'); ?>
+                                </a>
+                            <?php endif; ?>
+                        </td>
+
                         <td><?php echo esc_html($backup->backup_type); ?></td>
                         <td><?php echo esc_html($backup->created_at); ?></td>
                     </tr>
