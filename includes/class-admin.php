@@ -27,6 +27,11 @@ class Imitator_Admin {
      * @return void
      */
     public function render_admin_page() {
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . 'imitator_packages';
+        $backups    = $wpdb->get_results("SELECT * FROM {$table_name} ORDER BY id DESC"); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+
         include IMITATOR_PATH . 'templates/admin-page.php';
     }
 
